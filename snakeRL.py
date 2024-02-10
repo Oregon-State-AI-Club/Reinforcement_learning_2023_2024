@@ -121,7 +121,6 @@ class SnakeGame:
             self.display.blit(text, [0, 0]) #display text in the upper left
             pygame.display.flip()
 
-
     def _move(self, direction):
         x = self.head.x
         y = self.head.y
@@ -168,7 +167,7 @@ class SnakeGame:
         """
         pass 
 
-def Agent: 
+class Agent: 
     def __init__( self ) : 
         """
         1. Initialize the agent. 
