@@ -46,7 +46,7 @@ class SnakeGame:
         
         self.score = 0
         self.food = None
-        self._place_food()
+        self._place_food()         
 
     #helper function to place food
     #gives random position somewhere in the screen that is a multiple of the BLOCK_SIZE
@@ -231,7 +231,7 @@ class Agent:
         1. Initialize the agent. 
         2. Initialize the simulator. 
         """ 
-        self.simulator = SnakeGame()  
+        self.simulator = SnakeGame() 
 
     def learn_and_then_evaluate( self , train_count , test_interval , trial_count , create_visual_at_train = False , create_visual_at_test = False ) : 
         """ 
@@ -276,6 +276,36 @@ class Agent:
         """ 
         pass 
 
+    def get_random_action( self , direction ) : 
+        """
+        1. Return a random action. 
+        2. It the previous action is 1 and the current action is 2, this is a guaranteed death. 
+        3. Try to avoid this, as the current function is just to test that the interface is currently working. 
+        """ 
+        how_to_die = { 1 : 2 , 2 : 1 , 3 : 4 , 4 : 3 } 
+        random_integer = random.randint(1, 4) 
+        while random_integer == how_to_die[ direction ] : 
+            random_integer = random.randint(1, 4) 
+        return random_integer 
+
+    def evaluate_random_policy( self , trial_count , create_visual = False ) : 
+        """ 
+        1. Evaluate a random model. 
+        2. Return the reward for each trial. 
+        """
+        reward_list = [] 
+        for _ in range( trial_count ) : 
+            self.simulator = SnakeGame() 
+            action = 1 
+            done = False 
+            total_reward = 0 
+            while done == False : 
+                action = self.get_random_action( action ) 
+                state_list , reward , done = self.simulator.step( action , create_visual ) 
+                total_reward += reward 
+            reward_list.append( total_reward ) 
+        print( reward_list ) 
+
 ########################## 
 # 
 # How To Run It: 
@@ -292,17 +322,20 @@ if __name__=='__main__':
     test = True 
 
     if test == True : 
-        for _ in range( 100 ) : 
+        """for _ in range( 100 ) : 
             snake = SnakeGame() 
             done = False 
             while done == False : 
                 random_integer = random.randint(1, 4) 
                 print( random_integer ) 
-                """random_integer = 4 
-                print( random_integer ) """
+                random_integer = 4 
+                print( random_integer ) 
                 state_list , reward , done = snake.step( random_integer , True ) 
                 snake_loc = [ index for index, value in enumerate(state_list ) if value == 1 ] 
-                print( snake_loc , random_integer , reward , done ) 
+                print( snake_loc , random_integer , reward , done ) """ 
+
+        agent = Agent() 
+        agent.evaluate_random_policy( 10 , True )
 
     else : 
 
