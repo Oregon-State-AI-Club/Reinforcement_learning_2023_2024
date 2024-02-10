@@ -172,8 +172,9 @@ def Agent:
     def __init__( self ) : 
         """
         1. Initialize the agent. 
-        """
-        pass 
+        2. Initialize the simulator. 
+        """ 
+        self.simulator = SnakeGame()  
 
     def learn_and_then_evaluate( self , train_count , test_interval , trial_count , create_visual_at_train = False , create_visual_at_test = False ) : 
         """ 
@@ -183,7 +184,14 @@ def Agent:
             2.a. Store the result from the evaluate to the return list. 
         4. Return the return list. 
         """ 
-        pass 
+
+        return_list = [] 
+        for iteration in range( train_count ) : 
+            self.learn() 
+            if iteration % test_interval == 0 : 
+                result = self.evaluate( trial_count ) 
+                return_list.append( result ) 
+        return return_list  
 
     def learn( self , create_visual = False ) : 
         """ 
@@ -198,6 +206,19 @@ def Agent:
         """ 
         pass 
 
+    def get_greedy_action( self ) : 
+        """ 
+        1. Get the greedy action. 
+        """
+        pass 
+
+    def get_explore_exploit_action( self ) : 
+        """
+        1. Get the action according to the explore exploit. 
+        2. Update the state in order to decrease the random action at each step. 
+        """ 
+        pass 
+
 ########################## 
 # 
 # How To Run It: 
@@ -209,20 +230,14 @@ def Agent:
 # 
 ##########################
 
+if __name__=='__main__': 
 
-if __name__=='__main__':
-    game = SnakeGame()
-
-
-    #game loop
+    # Play the game manually. 
+    game = SnakeGame() 
     while True:
         game_over, score = game.play_step()
-
         if game_over == True:
-            break
-
+            break 
     print('Final Score', score)
-
-
-    pygame.quit()
+    pygame.quit() 
 
