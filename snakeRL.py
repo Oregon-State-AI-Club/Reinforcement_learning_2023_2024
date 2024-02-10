@@ -25,7 +25,6 @@ BLUE1 = (0, 0, 255)
 BLUE2 = (0, 100, 255)
 BLACK = (0, 0, 0)
 
-
 BLOCK_SIZE = 20     #size of the blocks in the "grid"
 SPEED = 10        
 
@@ -135,8 +134,39 @@ class SnakeGame:
         elif direction == Direction.UP:
             y -= BLOCK_SIZE
 
-        self.head = Point(x, y)
+        self.head = Point(x, y) 
 
+    def step( self ) : 
+        """
+        Input: The Action. 
+            1. 1 is equal to right. 
+            2. 2 is equal to left. 
+            3. 3 is equal to up. 
+            4. 4 is equal to down. 
+        Output: The State. 
+            1. State Array. 
+                1.a. A 1 for each location if there is a snake. 
+                1.b. A 0 for each location if there is not a snake. 
+                1.c. The row location of the head. 
+                1.d. The column location of the head. 
+                1.e. The row location of the food. 
+                1.f. The column location of the food. 
+            2. Reward. 
+            3. Done. 
+        """
+        pass 
+
+    def reset( self ) : 
+        """
+        Go back to the start of the game. 
+        """
+        pass 
+
+    def render( self ) : 
+        """
+        Create a visual for the current state. 
+        """
+        pass 
 
 if __name__=='__main__':
     game = SnakeGame()
