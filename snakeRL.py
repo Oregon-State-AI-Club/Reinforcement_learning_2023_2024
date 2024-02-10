@@ -42,7 +42,7 @@ class SnakeGame:
 
         self.head = Point(self.w/2, self.h/2)
         self.snake = [self.head, Point(self.head.x-BLOCK_SIZE, self.head.y), 
-                      Point(self.head.x-(2*BLOCK_SIZE), self.head.y)]
+                      Point(self.head.x-(2*BLOCK_SIZE), self.head.y)] 
         
         self.score = 0
         self.food = None
@@ -135,7 +135,7 @@ class SnakeGame:
 
         self.head = Point(x, y) 
 
-    def step( self ) : 
+    def step( self , action , create_visual = False ) : 
         """
         Input: The Action. 
             1. 1 is equal to right. 
@@ -152,8 +152,65 @@ class SnakeGame:
                 1.f. The column location of the food. 
             2. Reward. 
             3. Done. 
-        """
-        pass 
+        """ 
+
+        # 1. Collect the user input. 
+        if action == 1 : 
+            self.direction = Direction.RIGHT  
+        if action == 2 : 
+            self.direction = Direction.LEFT 
+        if action == 3 : 
+            self.direction = Direction.UP 
+        if action == 4 : 
+            self.direction = Direction.DOWN 
+
+        # 2. Move. 
+        self._move(self.direction) # Update the head. 
+        self.snake.insert(0, self.head) # Add another block to the snake (will remove the block at the end of the snake if no food is eaten ). 
+
+        # 3. Check if game over. 
+        game_over = False
+        if self._is_collision():
+            game_over = True 
+
+        # 4. Put a new food or make a move. 
+        if self.head == self.food:
+            self.score += 1
+            self._place_food()
+        else:
+            self.snake.pop() # Remove the last element of the snake. 
+
+        # 5. Update the UI and the clock. 
+        if create_visual == True : 
+            self._update_ui() 
+            self.clock.tick(SPEED) # TO DO: I don't know how this work. 
+
+        # 6. Return the State, Reward, and the Done. 
+
+        # The self.h * self.w is the state matrix. 
+        # The + 4 is for the row location of the head, and the food and the column location of the head, and the food. 
+        # I assume that we are going to use a function approximator. 
+        # Therefore, if the range of the value in for the state matrix is 0 or 1, the row, column location of the food and the head need to be [ real_row_location / self.h ] and [ real_column_location / self.w ]. 
+        # TO DO: This is not efficient. 
+        # TO DO: Implement a new approach, use a matrix. 
+        # TO DO: The above approach is not too good. 
+        # TO DO: We need to increase the size of the list. 
+        state_list = [ 0 for _ in range( ( self.h * self.w ) + 4 ) ] 
+        state_list[ self.h * self.w ] = int( self.food.x ) / self.w 
+        state_list[ self.h * self.w + 1 ] = int( self.food.y ) / self.h 
+        state_list[ self.h * self.w + 2 ] = int( self.head.x ) / self.w 
+        state_list[ self.h * self.w + 3 ] = int( self.head.y ) / self.h 
+        for the_matrix_loc in self.snake : 
+            index = int( the_matrix_loc.x ) * self.w + int( the_matrix_loc.y ) 
+            state_list[ index ] = 1 
+
+        # TO DO: Get the desicion from the group, do we give the +1 reward each time, or do we given the total reward once the game is over. 
+        reward = 0 
+        if game_over == True : 
+            reward = self.score 
+
+        # Return. 
+        return state_list , reward , game_over 
 
     def reset( self ) : 
         """
