@@ -22,3 +22,11 @@
 
 3. I don't know which algorithm we are going to use, however we can train them in parallel using the ray library. This is going to be done at the end though, not a current concern. 
 
+## The Resources. 
+
+1. https://arxiv.org/pdf/1312.5602.pdf. I think that this is a well known paper, though they use convolutional network and input the visual information. I am not sure if we can implement it in this term. The other way to do it is to get the state information from the simulator which is more like the way OpenAI Gym environment work. 
+
+2. https://www.youtube.com/watch?v=suEjzb8Qmls&list=PLwQpgP0y-0JhEgfy39QfHzxGmdq9ilM8J. This is a lecture series from the past. I think that this is from a Reinforcement Learning class from a professor at OSU at 2019. It is a good resource. 
+
+3. https://www.youtube.com/watch?v=jds0Wh9jTvE&list=PL_iWQOsE6TfVYGEGiAOMaOzzv41Jfm_Ps&index=9. This is also very well known, it is long, however I think that Lecture 4 might be quite relevant. 
+
