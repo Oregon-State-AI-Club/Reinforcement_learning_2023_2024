@@ -195,13 +195,14 @@ class SnakeGame:
         # TO DO: Implement a new approach, use a matrix. 
         # TO DO: The above approach is not too good. 
         # TO DO: We need to increase the size of the list. 
+
         state_list = [ 0 for _ in range( ( self.h * self.w ) + 4 ) ] 
         state_list[ self.h * self.w ] = int( self.food.x ) / self.w 
         state_list[ self.h * self.w + 1 ] = int( self.food.y ) / self.h 
         state_list[ self.h * self.w + 2 ] = int( self.head.x ) / self.w 
         state_list[ self.h * self.w + 3 ] = int( self.head.y ) / self.h 
         for the_matrix_loc in self.snake : 
-            index = int( the_matrix_loc.x ) * self.w + int( the_matrix_loc.y ) 
+            index = int( the_matrix_loc.x ) * self.h + int( the_matrix_loc.y ) 
             state_list[ index ] = 1 
 
         # TO DO: Get the desicion from the group, do we give the +1 reward each time, or do we given the total reward once the game is over. 
@@ -288,12 +289,29 @@ class Agent:
 
 if __name__=='__main__': 
 
-    # Play the game manually. 
-    game = SnakeGame() 
-    while True:
-        game_over, score = game.play_step()
-        if game_over == True:
-            break 
-    print('Final Score', score)
-    pygame.quit() 
+    test = True 
+
+    if test == True : 
+        for _ in range( 100 ) : 
+            snake = SnakeGame() 
+            done = False 
+            while done == False : 
+                random_integer = random.randint(1, 4) 
+                print( random_integer ) 
+                """random_integer = 4 
+                print( random_integer ) """
+                state_list , reward , done = snake.step( random_integer , True ) 
+                snake_loc = [ index for index, value in enumerate(state_list ) if value == 1 ] 
+                print( snake_loc , random_integer , reward , done ) 
+
+    else : 
+
+        # Play the game manually. 
+        game = SnakeGame() 
+        while True:
+            game_over, score = game.play_step()
+            if game_over == True:
+                break 
+        print('Final Score', score)
+        pygame.quit() 
 
