@@ -2,6 +2,7 @@ import pygame
 import random
 from enum import Enum
 from collections import namedtuple
+import sys 
 
 pygame.init()
 
@@ -28,6 +29,8 @@ BLACK = (0, 0, 0)
 BLOCK_SIZE = 20     #size of the blocks in the "grid"
 SPEED = 10        
 
+REWARD_DESIGN = 1 # 1: +1 each time the score increase, 2: The +self.score when the game is done. 
+
 class SnakeGame:
 
     def __init__(self, w=640, h=480):
@@ -46,7 +49,8 @@ class SnakeGame:
         
         self.score = 0
         self.food = None
-        self._place_food()         
+        self._place_food()     
+        self.reward_to_give = 0     
 
     #helper function to place food
     #gives random position somewhere in the screen that is a multiple of the BLOCK_SIZE
@@ -86,7 +90,7 @@ class SnakeGame:
 
         # 4. place new food or just move
         if self.head == self.food:
-            self.score += 1
+            self.score += 1 
             self._place_food()
         else:
             self.snake.pop()        #removes the last element of the snake
@@ -175,6 +179,7 @@ class SnakeGame:
 
         # 4. Put a new food or make a move. 
         if self.head == self.food:
+            self.reward_to_give += 1 
             self.score += 1
             self._place_food()
         else:
@@ -182,8 +187,7 @@ class SnakeGame:
 
         # 5. Update the UI and the clock. 
         if create_visual == True : 
-            self._update_ui() 
-            self.clock.tick(SPEED) # TO DO: I don't know how this work. 
+            self.render() 
 
         # 6. Return the State, Reward, and the Done. 
 
@@ -202,13 +206,21 @@ class SnakeGame:
         state_list[ self.h * self.w + 2 ] = int( self.head.x ) / self.w 
         state_list[ self.h * self.w + 3 ] = int( self.head.y ) / self.h 
         for the_matrix_loc in self.snake : 
-            index = int( the_matrix_loc.x ) * self.h + int( the_matrix_loc.y ) 
-            state_list[ index ] = 1 
+            index = int( the_matrix_loc.y ) * self.h + int( the_matrix_loc.x ) 
+            try : 
+                state_list[ index ] = 1 
+            except : 
+                print( f"THE ERROR: int( the_matrix_loc.x )={int( the_matrix_loc.x )}, int( the_matrix_loc.y ) ={int( the_matrix_loc.y ) }, index={index}, len(state_list)={len(state_list)}. ")
 
         # TO DO: Get the desicion from the group, do we give the +1 reward each time, or do we given the total reward once the game is over. 
-        reward = 0 
-        if game_over == True : 
-            reward = self.score 
+        
+        if REWARD_DESIGN == 1 : 
+            reward = self.reward_to_give 
+            self.reward_to_give = 0 
+        if REWARD_DESIGN == 2 : 
+            reward = 0 
+            if game_over == True : 
+                reward = self.score 
 
         # Return. 
         return state_list , reward , game_over 
@@ -222,8 +234,9 @@ class SnakeGame:
     def render( self ) : 
         """
         Create a visual for the current state. 
-        """
-        pass 
+        """ 
+        self._update_ui() 
+        self.clock.tick(SPEED) # TO DO: I don't know how this work.  
 
 class Agent: 
     def __init__( self ) : 
@@ -293,7 +306,7 @@ class Agent:
         1. Evaluate a random model. 
         2. Return the reward for each trial. 
         """
-        reward_list = [] 
+        return_list = [] 
         for _ in range( trial_count ) : 
             self.simulator = SnakeGame() 
             action = 1 
@@ -303,8 +316,8 @@ class Agent:
                 action = self.get_random_action( action ) 
                 state_list , reward , done = self.simulator.step( action , create_visual ) 
                 total_reward += reward 
-            reward_list.append( total_reward ) 
-        print( reward_list ) 
+            return_list.append( total_reward ) 
+        return return_list 
 
 ########################## 
 # 
@@ -319,26 +332,15 @@ class Agent:
 
 if __name__=='__main__': 
 
-    test = True 
-
-    if test == True : 
-        """for _ in range( 100 ) : 
-            snake = SnakeGame() 
-            done = False 
-            while done == False : 
-                random_integer = random.randint(1, 4) 
-                print( random_integer ) 
-                random_integer = 4 
-                print( random_integer ) 
-                state_list , reward , done = snake.step( random_integer , True ) 
-                snake_loc = [ index for index, value in enumerate(state_list ) if value == 1 ] 
-                print( snake_loc , random_integer , reward , done ) """ 
-
+    test = sys.argv[ 1 ] 
+    
+    if test == "test_semi_random_policy" : 
         agent = Agent() 
-        agent.evaluate_random_policy( 10 , True )
+        result = agent.evaluate_random_policy( 10 , True ) 
+        for iteration in range( len( result ) ) : 
+            print( f"The total reward from the iteration { iteration + 1 }: { result[ iteration ] }. ") 
 
-    else : 
-
+    if test == "play_the_game_manually" : 
         # Play the game manually. 
         game = SnakeGame() 
         while True:
@@ -347,4 +349,3 @@ if __name__=='__main__':
                 break 
         print('Final Score', score)
         pygame.quit() 
-
