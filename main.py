@@ -1,5 +1,6 @@
 from agent import Agent 
 from snake_game import SnakeGame 
+import pygame 
 
 import sys 
 if __name__=='__main__': 
