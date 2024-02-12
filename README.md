@@ -30,3 +30,20 @@
 
 3. https://www.youtube.com/watch?v=jds0Wh9jTvE&list=PL_iWQOsE6TfVYGEGiAOMaOzzv41Jfm_Ps&index=9. This is also very well known, it is long, however I think that Lecture 4 might be quite relevant. 
 
+## The Idea. 
+
+1. The Environment: Deterministic-Stochastic. 
+2. Is the model known: Yes. 
+3. Is the MDP Huge: No-Yes. 
+
+### Value Iteration. [ Dynamic Programming. ]. 
+
+1. Do a Bellman Backup at each state until the error is less than epsilon. 
+
+### Model Based Reinforcement Learning. 
+
+1. Do a Bellman Backup
+
+### Model Free Reinforcement Learning. 
+
+# This is not correct. 
