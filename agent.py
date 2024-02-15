@@ -84,7 +84,11 @@ class Agent:
 
         # If there is a snake, it is 1. 
         for point in state[ 0 ] : 
-            state_matrix[ int( point.y / state[ 7 ] ) ][ int( point.x / state[ 7 ] ) ] = 1 
+            # Here, implement this by checking if there is a collision, I was lazy here. 
+            try : 
+                state_matrix[ int( point.y / state[ 7 ] ) ][ int( point.x / state[ 7 ] ) ] = 1 
+            except : 
+                print( "Collision. ") 
 
         # Uncomment this if you want to check if the state matrix is correct. 
         # self.test_if_state_matrix_is_correct( state_matrix ) 
