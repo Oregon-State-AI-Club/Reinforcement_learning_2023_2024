@@ -14,19 +14,7 @@
 
 2. If you want to test the semi random policy which is used to make sure the model-simulator interface work correctly, in the terminal enter "python main.py test_semi_random_policy". This is going to test the semi random policy, and then it is going to print the total reward for each test. 
 
-## Question to Answer. 
-
-### General. 
-
-1. Can this problem be solved without RL? 
-2. If yes, is it efficient? why? why not? 
-3. Is the environment stochastic? 
-4. How to represent the current state? 
-
-### RL. 
-
-1. If we are going to use RL, do we need to use a model-free approach or a model-based approach? 
-2. Is the Transition Function known? 
+3. The game represent's the state in a way that is difficult to use function approximation, there is a method at the Agent that turn this raw state in to a numpy matrix of the game board, with 0 if there is not a snake, and 1 if there is a snake. The return state from this method is  ( state_matrix , food_x , food_y , head_x , head_y , the_direction , the_score ). From here we can decide on the best way to represent it, this is a start, though. 
 
 ## The Resources. 
 

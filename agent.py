@@ -98,7 +98,7 @@ class Agent:
         the_score = state[ 3 ] 
 
         # Return the new state representation. 
-        return state_matrix , food_x , food_y , head_x , head_y , the_direction , the_score 
+        return ( state_matrix , food_x , food_y , head_x , head_y , the_direction , the_score ) 
 
     def test_if_state_matrix_is_correct( self , the_matrix ) : 
         plt.imshow( the_matrix , cmap='viridis' , interpolation='none' ) 
