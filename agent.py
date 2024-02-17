@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 import random 
+
 class Agent: 
     def __init__( self ) : 
         """
@@ -40,6 +41,8 @@ class Agent:
         2. Return the average result. 
         """ 
         pass 
+
+    ################################## 
 
     def get_random_action( self , direction ) : 
         """
@@ -108,5 +111,7 @@ class Agent:
         plt.imshow( the_matrix , cmap='viridis' , interpolation='none' ) 
         plt.colorbar() 
         plt.show() 
+
+    ################################## 
 
         
