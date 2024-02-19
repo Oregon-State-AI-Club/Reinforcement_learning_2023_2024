@@ -1,8 +1,17 @@
 # Reinforcement Learning 2023 - 2024. 
 
-- The creation of a reinforcement learning agent through the medium of a snake game. 
+- The creation of a reinforcement learning agent that interact with a traditional Snake Game. 
 
-## How to use this Template. 
+### Agent Directory. 
+
+1. In this directory, for every RL Algorithm we are going to implement, we can create a new Agent that inherit from the main Agent class, in the setup directory, then change the method's learn, evaluate and thechange_the_state_representation. 
+2. There are 2 files, right now, dqn_agent, where we can implement an Agent that use a Deep Q Network, and a ppo_agent, where we can implement an Agent that use Proximal Policy Optimization. 
+3. If you have an algorithm or idea you have, you are welcome to create a new file and implement your agent there. 
+
+### Setup Directory. 
+
+1. In this directory, there are 3 files, agent.py, which is the parent class for all of the RL agent's, snake_game.py which is the code for the environment and the game, and there is test_agent.py, which is an Agent just to test and make sure the Agent-Simulator interface is working correctly, and the project is setup well. 
+2. You don't need to modify anything in this directory. 
 
 ### Snake Game. 
 
@@ -22,22 +31,14 @@
 6. There is already a code, to test a semi-random policy, which can act as an inspiration to write a better evaluate method. 
 7. Feel free to create a class that inherit from this agent, and then you can implement your own learn, evaluate, and change_the_state_representation method. 
 
-## The Documentation. 
+## Important. 
 
-- Currently, we have a snake game, where you can interact and play with it manually, or you can train an agent with a similar way that you can train an agent in an environment such as one of the OpenAI Gym environment. 
+1. Currently, we have a snake game, where you can interact and play with it manually, or you can train an agent with a similar way that you can train an agent in an environment such as one of the OpenAI Gym environment. 
 
-- Once you have created the environment, you can use the step( action ) function, to interact with the environment. The step( action ) function return 3 thing, state, reward, and the done which is True if the game is over and False if it is not. 
+2. Once you have created the environment, you can use the step( action ) function, to interact with the environment. The step( action ) function return 3 thing, state, reward, and the done which is True if the game is over and False if it is not. The state, you are going to recieve here is the game's internal state representation, you need to implement/call the method change_the_state_representation in your agent to change this state representation into something that is useful. 
 
 ## How to run it. 
 
-1. If you want to just play the game manually, in the terminal enter "python main.py play_the_game_manually". 
+1. If you want to just play the game manually, in the terminal enter "python3 main.py play_the_game_manually". 
+2. If you want to test the semi random policy which is used to make sure the model-simulator interface work correctly, in the terminal enter "python3 main.py test_semi_random_policy". 
 
-2. If you want to test the semi random policy which is used to make sure the model-simulator interface work correctly, in the terminal enter "python main.py test_semi_random_policy". This is going to test the semi random policy, and then it is going to print the total reward for each test. 
-
-3. The game represent's the state in a way that is difficult to use function approximation, there is a method at the Agent that turn this raw state in to a numpy matrix of the game board, with 0 if there is not a snake, and 1 if there is a snake. The return state from this method is  ( state_matrix , food_x , food_y , head_x , head_y , the_direction , the_score ). From here we can decide on the best way to represent it, this is a start, though. 
-
-## The Resources. 
-
-1. https://www.youtube.com/watch?v=suEjzb8Qmls&list=PLwQpgP0y-0JhEgfy39QfHzxGmdq9ilM8J. This is a lecture series from the past. I think that this is from a Reinforcement Learning class from a professor at OSU at 2019. It is a good resource. 
-
-2. https://www.youtube.com/watch?v=jds0Wh9jTvE&list=PL_iWQOsE6TfVYGEGiAOMaOzzv41Jfm_Ps&index=9. This is also very well known, it is long, however I think that Lecture 4 might be quite relevant. 
