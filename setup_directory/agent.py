@@ -42,36 +42,4 @@ class Agent:
         """ 
         pass 
 
-    def _change_the_state_representation( self , state ) : 
-        """ 
-        Turn the raw state representation, to a useful state representation. 
-        """ 
-
-        # Initialize the state Matrix. 
-        height = state[ 5 ] / state[ 7 ] 
-        width = state[ 6 ] / state[ 7 ]
-        state_matrix = np.zeros( ( int( height ) , int( width ) ) ) 
-
-        # If there is a snake, it is 1. 
-        for point in state[ 0 ] : 
-            # Here, implement this by checking if there is a collision, I was lazy here. 
-            try : 
-                state_matrix[ int( point.y / state[ 7 ] ) ][ int( point.x / state[ 7 ] ) ] = 1 
-            except : 
-                print( "Collision. ") 
-
-        # Uncomment this if you want to check if the state matrix is correct. 
-        # self.test_if_state_matrix_is_correct( state_matrix ) 
-
-        # Initialize the rest of the state. 
-        food_x = state[ 4 ].x 
-        food_y = state[ 4 ].y 
-        head_x = state[ 2 ].x 
-        head_y = state[ 2 ].y  
-        the_direction = state[ 1 ] 
-        the_score = state[ 3 ] 
-
-        # Return the new state representation. 
-        return ( state_matrix , food_x , food_y , head_x , head_y , the_direction , the_score ) 
     
-
