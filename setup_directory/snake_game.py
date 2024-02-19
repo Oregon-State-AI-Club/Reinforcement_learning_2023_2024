@@ -24,14 +24,6 @@ BLOCK_SIZE = 20     #size of the blocks in the "grid"
 SPEED = 10        
 REWARD_DESIGN = 1 # 1: +1 each time the score increase, 2: The +self.score when the game is done. 
 
-"""[ 0 ] [ 0 ] = [ 0 , 0 , 20 , 20 ] 
-[ 0 ] [ 1 ] = [ 0 , 20 , 20 , 20 ] 
-
-snake to matrix: [ y / BLOCK_SIZE ][ x / BLOCK_SIZE ]. 
-matrix = height / BLOCK_SIZE x width / BLOCK_SIZE. 
-
-"""
-
 class SnakeGame:
 
     def __init__(self, create_visual=True, w=640, h=480):
