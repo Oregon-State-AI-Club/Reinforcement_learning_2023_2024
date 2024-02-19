@@ -39,6 +39,6 @@
 
 ## How to run it. 
 
-1. If you want to just play the game manually, in the terminal enter "python main.py play_the_game_manually". 
-2. If you want to test the semi random policy which is used to make sure the model-simulator interface work correctly, in the terminal enter "python main.py test_semi_random_policy". 
+1. If you want to just play the game manually, in the terminal enter "python3 main.py play_the_game_manually". 
+2. If you want to test the semi random policy which is used to make sure the model-simulator interface work correctly, in the terminal enter "python3 main.py test_semi_random_policy". 
 
