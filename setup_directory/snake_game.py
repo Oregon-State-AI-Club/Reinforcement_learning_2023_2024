@@ -26,11 +26,12 @@ REWARD_DESIGN = 1 # 1: +1 each time the score increase, 2: The +self.score when 
 
 class SnakeGame:
 
-    def __init__(self, w=640, h=480):
+    def __init__(self, create_visual=True, w=640, h=480):
         self.w = w
         self.h = h
         # init display
-        self.display = pygame.display.set_mode((self.w, self.h))    #I think this creates the window
+        if (create_visual):
+            self.display = pygame.display.set_mode((self.w, self.h))    #I think this creates the window
         pygame.display.set_caption('Snake')
         self.clock = pygame.time.Clock()
         # init game state
